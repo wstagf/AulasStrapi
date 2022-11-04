@@ -4,7 +4,7 @@ export default {
         //@ts-ignore
         var a = await strapi.db.connection.raw(`
             select 
-                sum(value)
+                sum(value) as "soma"
             from transactions t 
             
             inner join transactions_bank_links tbl on tbl.transaction_id  = t.id 
@@ -14,7 +14,7 @@ export default {
 
 
         ctx = {
-            'balance': a.rows[0]['sum']
+            'balance': a.rows[0]['soma']
         }
 
         return ctx;
