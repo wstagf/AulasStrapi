@@ -1,5 +1,5 @@
 export default {
-    async balance(ctx, next) { // called by GET /hello 
+    async balanceQuery(ctx, next) { // called by GET /hello 
 
         //@ts-ignore
         var a = await strapi.db.connection.raw(`
@@ -17,9 +17,21 @@ export default {
             'balance': a.rows[0]['sum']
         }
 
-
-
-
         return ctx;
     },
+
+    async balanceCustom(ctx, next) { // called by GET /hello 
+
+        ctx.body = "teste";
+        var teste = await strapi.db.query('api::transaction.transaction').findMany({ // uid syntax: 'api::api-name.content-type-name'
+            populate: [
+
+            ],
+            where: {
+
+            }
+
+        });
+        return ctx;
+    }
 };
