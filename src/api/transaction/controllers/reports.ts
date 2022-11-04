@@ -1,13 +1,25 @@
 export default {
     async balance(ctx, next) { // called by GET /hello 
-        ctx.body = 'Hello World!'; // we could also send a JSON
 
-        var teste = await strapi.db.query('api::transaction.transaction').findOne({ // uid syntax: 'api::api-name.content-type-name'
+        //@ts-ignore
+        var a = await strapi.db.connection.raw(`
+            select 
+                sum(value)
+            from transactions t 
+            
+            inner join transactions_bank_links tbl on tbl.transaction_id  = t.id 
 
-        })
+            where tbl.bank_id = ${ctx.request.params['bankId']}
+            `)
 
 
-        console.log(teste);
+        ctx = {
+            'balance': a.rows[0]['sum']
+        }
 
+
+
+
+        return ctx;
     },
 };

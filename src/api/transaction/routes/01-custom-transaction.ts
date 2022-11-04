@@ -3,7 +3,7 @@ export default {
     routes: [
         {
             method: 'GET',
-            path: '/transaction/report',
+            path: '/transaction/report/:bankId',
             handler: 'reports.balance',
         }
     ]
